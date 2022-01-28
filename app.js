@@ -1,52 +1,49 @@
 const Person = (props) => {
-    return(
-        <li>
+
+return(
+    <li>
         <span>{props.name}</span>
-        <button onClick={() => props.delete(props.id)}>Delete</button>
-        </li>
-    )
+        <button onClick={props.delete}>Delete</button>
+    </li>
+)
+
+
 }
 
 class List extends React.Component{
     state = {
         climbers : [
+
             {
-                id: 1,
-                name: "Alex Honnold"
+            id:1,
+            name:"Kurtyka, Wojciech(Voytek)"
             },
             {
-                id: 2,
-                name: "Jerzy Kukuczka"
+            id:2, 
+            name:"Kukuczka, Jerzy(Jurek)"
             },
-            {
-                id: 3,
-                name: "Wojtek Kurtyka"
-            },
-            {
-                id: 4,
-                name: "Ueli Steck"
-            },
-    
         ]
     }
+
+handleDelete = (id) => {
     
-    handleDelete = id => {
-        let climbers = [...this.state.climbers];
-        climbers = climbers.filter(climber => climber.id !== id);
-        this.setState({
-            climbers,
-        })
-    }
+    let climbers = [...this.state.climbers];
+    climbers = climbers.filter(climber => climber.id !== id);
+    this.setState({
+        climbers,
+    })
+
+}
 
     render(){
-        const climbers =   this.state.climbers.map( climber =>  <Person key={climber.id} id={climber.id} name={climber.name} delete={this.handleDelete} />);
+        const climbers = this.state.climbers.map(climber => <Person id={climber.id} key={climber.id}  name={climber.name} delete={this.handleDelete.bind(this,climber.id)}/>)
         return(
             <>
-           {climbers}
+            {climbers}
             </>
         )
     }
-    
-    }
-    
-    ReactDOM.render(<React.StrictMode><List /></React.StrictMode>, document.getElementById("root"));
+}
+
+
+ReactDOM.render(<List />,document.getElementById("root"))
